@@ -69,7 +69,7 @@ export const createEditor = (): Editor => {
       }
 
       DIRTY_PATHS.set(editor, dirtyPaths)
-      Editor.transform(editor, op)
+      Transforms.transform(editor, op)
       editor.operations.push(op)
       Editor.normalize(editor)
 
@@ -133,6 +133,15 @@ export const createEditor = (): Editor => {
       if (selection && Range.isExpanded(selection)) {
         Transforms.delete(editor)
       }
+    },
+
+    getFragment: () => {
+      const { selection } = editor
+
+      if (selection) {
+        return Node.fragment(editor, selection)
+      }
+      return []
     },
 
     insertBreak: () => {

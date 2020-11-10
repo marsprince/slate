@@ -35,7 +35,7 @@ Please use the Slack instead of asking questions in issues, since we want to res
 
 ## Submitting Pull Requests
 
-All pull requests are super welcomed and greatly appreciated! Issues in need of a solution are marked with a [`♥ help please`](https://github.com/ianstormtaylor/slate/issues?q=is%3Aissue+is%3Aopen+label%3A%22%E2%99%A5+help+please%22) label if you're looking for somewhere to start.
+All pull requests are super welcomed and greatly appreciated! Issues in need of a solution are marked with a [`♥ help`](https://github.com/ianstormtaylor/slate/issues?q=is%3Aissue+is%3Aopen+label%3A%22%E2%99%A5+help%22) label if you're looking for somewhere to start.
 
 Please include tests and docs with every pull request!
 
@@ -52,7 +52,7 @@ yarn build
 
 ## Running Examples
 
-To run the examples, start by building the mono repo as described in the [Repository Setup](#repository-setup) section.
+To run the examples, start by building the monorepo as described in the [Repository Setup](#repository-setup) section.
 
 Then you can start the examples server with:
 
@@ -62,7 +62,7 @@ yarn start
 
 ## Running Tests
 
-To run the tests, start by building the mono repo as described in the [Repository Setup](#repository-setup) section.
+To run the tests, start by building the monorepo as described in the [Repository Setup](#repository-setup) section.
 
 Then you can rerun the tests with:
 
@@ -80,7 +80,7 @@ If you only want to run a specific test or tests, you can run `yarn test --fgrep
 
 ## Publishing Releases
 
-Since we use [Lerna](https://lernajs.io) to manage the Slate packages this is fairly easy, just run:
+Since we use [Lerna](https://lerna.js.org) to manage the Slate packages this is fairly easy, just run:
 
 ```js
 yarn release

@@ -8,6 +8,8 @@ import {
   Range,
   Text,
   Transforms,
+  NodeEntry,
+  Ancestor,
 } from '..'
 
 export const NodeTransforms = {
@@ -168,7 +170,8 @@ export const NodeTransforms = {
           )
         }
 
-        const [parent, parentPath] = Editor.node(editor, Path.parent(path))
+        const parentNodeEntry = Editor.node(editor, Path.parent(path))
+        const [parent, parentPath] = parentNodeEntry as NodeEntry<Ancestor>
         const index = path[path.length - 1]
         const { length } = parent.children
 
@@ -320,7 +323,6 @@ export const NodeTransforms = {
           type: 'merge_node',
           path: newPath,
           position,
-          target: null,
           properties,
         })
       }
@@ -608,7 +610,6 @@ export const NodeTransforms = {
       const [, highestPath] = highest
       const lowestPath = at.path.slice(0, depth)
       let position = height === 0 ? at.offset : at.path[depth] + nudge
-      let target: number | null = null
 
       for (const [node, path] of Editor.levels(editor, {
         at: lowestPath,
@@ -635,12 +636,10 @@ export const NodeTransforms = {
             type: 'split_node',
             path,
             position,
-            target,
             properties,
           })
         }
 
-        target = position
         position = path[path.length - 1] + (split || isEnd ? 1 : 0)
       }
 
@@ -721,7 +720,7 @@ export const NodeTransforms = {
 
       for (const pathRef of pathRefs) {
         const path = pathRef.unref()!
-        const [node] = Editor.node(editor, path)
+        const [node] = Editor.node(editor, path) as NodeEntry<Ancestor>
         let range = Editor.range(editor, path)
 
         if (split && rangeRef) {
@@ -795,7 +794,7 @@ export const NodeTransforms = {
           match: editor.isInline(element)
             ? n => Editor.isBlock(editor, n)
             : n => Editor.isEditor(n),
-          mode: 'highest',
+          mode: 'lowest',
           voids,
         })
       )
@@ -823,7 +822,8 @@ export const NodeTransforms = {
             : Path.common(firstPath, lastPath)
 
           const range = Editor.range(editor, firstPath, lastPath)
-          const [commonNode] = Editor.node(editor, commonPath)
+          const commonNodeEntry = Editor.node(editor, commonPath)
+          const [commonNode] = commonNodeEntry as NodeEntry<Ancestor>
           const depth = commonPath.length + 1
           const wrapperPath = Path.next(lastPath.slice(0, depth))
           const wrapper = { ...element, children: [] }
